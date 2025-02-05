@@ -1,20 +1,19 @@
-import { useEffect, useState } from 'react';
-import api from './services/api';
+import React from 'react';
+import { BrowserRouter, Route, Routes} from 'react-router-dom';
+import HomePage from './pages/homePage/HomePage';
+import ProfilePage from './pages/profilePage/ProfilePage';
 
-function App() {
-  const [message, setMessage] = useState('');
 
-  useEffect(() => {
-    api.get('/teste') // Chama o endpoint "/teste" do backend
-      .then(response => setMessage(response.data.message))
-      .catch(error => console.error('Erro ao conectar com o backend:', error));
-  }, []);
+const App: React.FC = () => {
+  
 
   return (
-    <div>
-      <h1>Teste de conexão</h1>
-      <p>{message || 'Conectando...'}</p>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage/>} />
+        <Route path="/profile" element={<ProfilePage/>} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
