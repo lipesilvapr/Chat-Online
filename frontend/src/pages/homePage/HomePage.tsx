@@ -22,9 +22,11 @@ const HomePage: React.FC = () => {
       <div className="sidebar-content">
         <SideBar />
         <div className="content">
-          <p>{message || "Conectando..."}</p>
+          <div className="text-area">
+            <p>{message || "Conectando..."}</p>
+          </div>
           <div className="input-area">
-            <input type="text" className="input-text"/>
+            <input type="text" className="input-text" placeholder="Text here..."/>
           </div>
         </div>
       </div>
