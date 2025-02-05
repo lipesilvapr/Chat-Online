@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import api from "../../services/api";
-import { useNavigate } from "react-router-dom";
+import "./styles.css";
+import Header from "../../components/header/Header";
+import SideBar from "../../components/sidebar/SideBar";
 
 const HomePage: React.FC = () => {
   const [message, setMessage] = useState("");
-  const navigate = useNavigate();
 
   useEffect(() => {
     api
@@ -15,15 +16,18 @@ const HomePage: React.FC = () => {
       );
   }, []);
 
-  const handleClick = () => {
-    navigate("/profile");
-  };
-
   return (
-    <div>
-      <h1>Home Page</h1>
-      <p>{message || "Conectando..."}</p>
-      <button onClick={handleClick}>Profile page</button>
+    <div className="page">
+      <Header title="Home Page" />
+      <div className="sidebar-content">
+        <SideBar />
+        <div className="content">
+          <p>{message || "Conectando..."}</p>
+          <div className="input-area">
+            <input type="text" className="input-text"/>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
