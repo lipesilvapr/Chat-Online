@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./styles.css";
 import backgroundAuth from "../../assets/backgroundAuth.jpeg";
 import ForumIcon from "@mui/icons-material/Forum";
+import api from "../../services/api";
 
 const RegisterPage: React.FC = () => {
   const [name, setName] = useState("");
@@ -19,24 +20,17 @@ const RegisterPage: React.FC = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:3000/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name, email, password }),
+      const response = await api.post("/auth/register", {
+        name,
+        email,
+        password,
       });
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || "Registration failed");
-      }
-
       // Registro bem-sucedido
-      console.log("Registration successful:", data);
+      console.log("Registration successful:", response.data);
       setError("");
       alert("Registration successful! Please log in.");
+      // Redirecionar para a tela de login
       window.location.href = "/login";
     } catch (err) {
       setError((err as Error).message || "An error occurred during registration");

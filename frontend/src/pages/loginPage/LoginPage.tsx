@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./styles.css";
 import backgroundAuth from "../../assets/backgroundAuth.jpeg";
 import ForumIcon from "@mui/icons-material/Forum";
+import api from "../../services/api";
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -12,25 +13,16 @@ const LoginPage: React.FC = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:3000/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
+      const response = await api.post("/auth/login", {
+        email,
+        password,
       });
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || "Login failed");
-      }
-
       // Login bem-sucedido
-      console.log("Login successful:", data);
+      console.log("Login successful:", response.data);
       setError("");
       alert("Login successful!");
-      localStorage.setItem("access_token", data.access_token);
+      localStorage.setItem("access_token", response.data.access_token);
       window.location.href = "/";
     } catch (err) {
       setError((err as Error).message || "An error occurred during login");
