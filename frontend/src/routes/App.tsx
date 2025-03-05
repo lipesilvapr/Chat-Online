@@ -4,6 +4,7 @@ import HomePage from "../pages/homePage/HomePage";
 import ProfilePage from "../pages/profilePage/ProfilePage";
 import { PageProvider } from "../context/PageContext";
 import RegisterPage from "../pages/registerPage/RegisterPage";
+import LoginPage from "../pages/loginPage/LoginPage";
 
 const App: React.FC = () => {
   return (
@@ -12,6 +13,7 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/login" element={<LoginPage />} />
           <Route path="/profile" element={<ProfilePage />} />
         </Routes>
       </PageProvider>
