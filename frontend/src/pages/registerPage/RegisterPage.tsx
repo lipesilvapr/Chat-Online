@@ -1,9 +1,48 @@
-import React from "react";
+import React, { useState } from "react";
 import "./styles.css";
 import backgroundAuth from "../../assets/backgroundAuth.jpeg";
 import ForumIcon from "@mui/icons-material/Forum";
 
 const RegisterPage: React.FC = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:3000/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email, password }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Registration failed");
+      }
+
+      // Registro bem-sucedido
+      console.log("Registration successful:", data);
+      setError("");
+      alert("Registration successful! Please log in.");
+      window.location.href = "/login";
+    } catch (err) {
+      setError((err as Error).message || "An error occurred during registration");
+    }
+  };
+
   return (
     <div className="register-page">
       <div className="base-part">
@@ -18,18 +57,35 @@ const RegisterPage: React.FC = () => {
           <h2>Sign up</h2>
           <p>Create an account</p>
         </div>
-        <form className="register-form">
+        <form className="register-form" onSubmit={handleSubmit}>
           <label>
-            <input className="form-input" type="text" placeholder="Name" />
+            <input
+              className="form-input"
+              type="text"
+              placeholder="Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
           </label>
           <label>
-            <input className="form-input" type="text" placeholder="Email" />
+            <input
+              className="form-input"
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
           </label>
           <label>
             <input
               className="form-input"
               type="password"
               placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
             />
           </label>
           <label>
@@ -37,12 +93,16 @@ const RegisterPage: React.FC = () => {
               className="form-input"
               type="password"
               placeholder="Confirm Password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
             />
           </label>
+          {error && <p className="error-message">{error}</p>}
           <div className="form-footer">
             <div className="form-footer-text">
-                <p>Already have an account?</p>
-                <a href="/login">Login</a>
+              <p>Already have an account?</p>
+              <a href="/login">Login</a>
             </div>
             <button type="submit">Register</button>
           </div>

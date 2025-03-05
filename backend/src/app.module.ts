@@ -4,6 +4,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MessagesModule } from './messages/messages.module';
+import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -16,6 +18,8 @@ import { MessagesModule } from './messages/messages.module';
       }),
     }),
     MessagesModule,
+    UserModule,
+    AuthModule,
   ],  
   controllers: [AppController],
   providers: [AppService],
