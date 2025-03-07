@@ -53,7 +53,6 @@ const MessageList: React.FC = () => {
           timestamp={formatDateToBrasilia(message.timestamp)}
         />
       ))}
-      {/* Âncora invisível para rolar automaticamente */}
       <div ref={scrollBottomRef} />
     </div>
   );
