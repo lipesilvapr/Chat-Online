@@ -1,0 +1,19 @@
+.message-list {
+  overflow-y: auto;
+  width: 100%;
+
+  &::-webkit-scrollbar-track {
+    background: #3a3939; /* Cor de fundo da trilha */
+    border-radius: 5px; /* Bordas arredondadas */
+    height: 50px;
+  }
+
+  &::-webkit-scrollbar {
+    width: 8px; /* Largura da barra vertical */
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #8a8383; /* Cor do thumb */
+    border-radius: 5px; /* Bordas arredondadas */
+  }
+}

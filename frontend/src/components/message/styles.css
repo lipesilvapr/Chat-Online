@@ -1,0 +1,15 @@
+.message-container{
+    width: 100%;
+    margin: 1% 0;
+}
+
+.time{
+    font-size: 12px;
+    margin: 0;
+}
+
+.message-text{
+    color: whitesmoke;
+    font-size: 20px;
+    margin: 0;
+}

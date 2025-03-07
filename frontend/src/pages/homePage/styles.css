@@ -23,6 +23,54 @@ p{
     margin-bottom: 1rem;
 }
 
+.text-area{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 90%;
+    height: 80dvh;
+    background-color: #494949;
+    margin-bottom: 1%;
+}
+
 .input-area{
-    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+form {
+    display : flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.submit {
+    width: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    background-color: #292929;
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-left: -5%;
+    z-index: 1;
+}
+
+input{
+    width: 90%;
+    height: 50px;
+    margin-bottom: 1rem;
+    background-color: #292929;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+    padding-left: 20px;
+    font-size: 18px;
 }
