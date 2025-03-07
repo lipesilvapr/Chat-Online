@@ -9,7 +9,8 @@ export class UserService {
   constructor(@InjectModel(User.name) private userModel: Model<User>) {}
 
   async findOneByEmail(email: string): Promise<User | undefined> {
-    return this.userModel.findOne({ email }).exec();
+    const user = await this.userModel.findOne({ email }).exec();
+    return user;
   }
 
   async create(user: any): Promise<User> {

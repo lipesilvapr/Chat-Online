@@ -4,6 +4,7 @@ import backgroundAuth from "../../assets/backgroundAuth.jpeg";
 import ForumIcon from "@mui/icons-material/Forum";
 import api from "../../services/api";
 
+
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -17,13 +18,14 @@ const LoginPage: React.FC = () => {
         email,
         password,
       });
-
+      
       // Login bem-sucedido
       console.log("Login successful:", response.data);
       setError("");
       alert("Login successful!");
       localStorage.setItem("access_token", response.data.access_token);
-      window.location.href = "/";
+      
+      window.location.href = "/home";
     } catch (err) {
       setError((err as Error).message || "An error occurred during login");
     }
