@@ -16,3 +16,9 @@ body{
 h1{
     margin-left: 1rem;
 }
+
+.button-container{
+    display: flex;
+    gap: 10px;
+    margin-right: 1rem;
+}

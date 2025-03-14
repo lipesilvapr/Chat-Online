@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import "./styles.css";
 import { useNavigate } from "react-router-dom";
 import { PageContext } from "../../context/PageContext";
@@ -15,7 +15,7 @@ const Header: React.FC<HeaderProps> = ({ title }) => {
     throw new Error("Context must be used within a Provider");
   }
   const { currentPage, setCurrentPage } = pageContext;
-  const { user } = userContext;
+  const { user, logout } = userContext;
   const navigate = useNavigate();
   const handleClick = () => {
     if (currentPage === "Home") {
@@ -27,15 +27,16 @@ const Header: React.FC<HeaderProps> = ({ title }) => {
     }
   };
 
-  useEffect(() => {
-    console.log("Usuário no contexto:", user);
-  }, [user]);
-  
   return (
     <header>
       <h1>{title}</h1>
       {user ? <p>Bem-vindo, {user.name}</p> : <p>Bem-vindo, visitante</p>}
-      <button onClick={handleClick}>{currentPage === "Home" ? "Profile Page" : "Home Page"}</button>
+      <div className="button-container">
+        <button onClick={handleClick}>
+          {currentPage === "Home" ? "Profile Page" : "Home Page"}
+        </button>
+        <button onClick={logout}>Logout</button>
+      </div>
     </header>
   );
 };

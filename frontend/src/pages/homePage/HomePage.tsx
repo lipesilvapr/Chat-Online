@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import api from "../../services/api";
 import "./styles.css";
 import Header from "../../components/header/Header";
 import SideBar from "../../components/sidebar/SideBar";
 import ArrowUpwardRoundedIcon from '@mui/icons-material/ArrowUpwardRounded';
 import MessageList from "../../components/messageList/MessageList";
+import { UserContext } from "../../context/UserContext"; // ajusta o path se necessário
 
 const HomePage: React.FC = () => {
+  const { user, token } = useContext(UserContext)!;
+
   const [bmessage, setbMessage] = useState("");
   const [messageBd, setMessageBd] = useState("");
 
@@ -21,18 +24,40 @@ const HomePage: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     if (!messageBd) {
       alert("Digite uma mensagem para enviar");
       return;
     }
+
+    if (!user) {
+      alert("Usuário não autenticado!");
+      return;
+    }
+
     try {
-      await api.post("/messages", { content: messageBd });
+      await api.post(
+        "/messages",
+        {
+          content: messageBd,
+          sender: {
+            name: user.name,
+            email: user.email,
+          },
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
       setMessageBd("");
     } catch (error) {
       console.error("Erro ao enviar mensagem:", error);
       alert("Erro ao enviar mensagem. Verifique o console para mais informações.");
     }
-  }
+  };
 
   return (
     <div className="page">
