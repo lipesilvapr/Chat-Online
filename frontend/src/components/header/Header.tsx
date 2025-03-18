@@ -1,7 +1,8 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import "./styles.css";
 import { useNavigate } from "react-router-dom";
 import { PageContext } from "../../context/PageContext";
+import { UserContext } from "../../context/UserContext";
 
 interface HeaderProps {
   title: string;
@@ -9,10 +10,12 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ title }) => {
   const pageContext = useContext(PageContext);
-  if (!pageContext) {
-    throw new Error("PageContext must be used within a PageProvider");
+  const userContext = useContext(UserContext);
+  if (!pageContext || !userContext) {
+    throw new Error("Context must be used within a Provider");
   }
   const { currentPage, setCurrentPage } = pageContext;
+  const { user, logout } = userContext;
   const navigate = useNavigate();
   const handleClick = () => {
     if (currentPage === "Home") {
@@ -20,13 +23,20 @@ const Header: React.FC<HeaderProps> = ({ title }) => {
       navigate("/profile");
     } else {
       setCurrentPage("Home");
-      navigate("/");
+      navigate("/home");
     }
   };
+
   return (
     <header>
       <h1>{title}</h1>
-      <button onClick={handleClick}>{currentPage === "Home" ? "Profile Page" : "Home Page"}</button>
+      {user ? <p>Bem-vindo, {user.name}</p> : <p>Bem-vindo, visitante</p>}
+      <div className="button-container">
+        {/* <button onClick={handleClick}>
+          {currentPage === "Home" ? "Profile Page" : "Home Page"}
+        </button> */}
+        <button onClick={logout}>Logout</button>
+      </div>
     </header>
   );
 };

@@ -1,0 +1,27 @@
+.message-container{
+    width: 100%;
+    margin: 1% 0;
+}
+
+.time{
+    font-size: 12px;
+    color: rgb(136, 138, 138);
+    margin: 0;
+}
+
+.message-text{
+    color: whitesmoke;
+    font-size: 18px;
+    margin: 0;
+}
+
+.message-info{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.message-sender{
+    font-size: 18px;
+    font-weight: bold;
+}
