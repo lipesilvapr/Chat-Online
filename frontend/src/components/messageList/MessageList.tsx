@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import api from "../../services/api";
 import Message from "../message/Message";
-import { io, Socket } from "socket.io-client"; // <- IMPORTANTE
+import { io, Socket } from "socket.io-client"; 
 import "./styles.css";
 
 interface MessageType {
@@ -33,7 +33,7 @@ const MessageList: React.FC = () => {
     return `${day}/${month}/${year} - ${hours}:${minutes}`;
   };
 
-  // Carrega mensagens antigas uma única vez quando o componente monta
+  
   useEffect(() => {
     const fetchMessages = async () => {
       try {
@@ -47,24 +47,24 @@ const MessageList: React.FC = () => {
     fetchMessages();
   }, []);
 
-  // Configura o socket apenas uma vez
+  
   useEffect(() => {
-    // Cria a conexão com o backend Socket.io
-    const socket = io(api_url); // <- Ajuste a URL conforme o seu backend!
+    
+    const socket = io(api_url);
     socketRef.current = socket;
 
-    // Ouve o evento "newMessage" do servidor
+    
     socket.on("newMessage", (newMessage: MessageType) => {
       setMessages((prevMessages) => [...prevMessages, newMessage]);
     });
 
-    // Cleanup na desmontagem do componente
+    
     return () => {
       socket.disconnect();
     };
   }, []);
 
-  // Scroll para a última mensagem sempre que atualizar a lista
+  
   useEffect(() => {
     scrollBottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);

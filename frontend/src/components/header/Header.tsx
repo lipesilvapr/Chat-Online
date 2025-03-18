@@ -32,9 +32,9 @@ const Header: React.FC<HeaderProps> = ({ title }) => {
       <h1>{title}</h1>
       {user ? <p>Bem-vindo, {user.name}</p> : <p>Bem-vindo, visitante</p>}
       <div className="button-container">
-        <button onClick={handleClick}>
+        {/* <button onClick={handleClick}>
           {currentPage === "Home" ? "Profile Page" : "Home Page"}
-        </button>
+        </button> */}
         <button onClick={logout}>Logout</button>
       </div>
     </header>

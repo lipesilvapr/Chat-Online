@@ -5,7 +5,7 @@ import Header from "../../components/header/Header";
 import SideBar from "../../components/sidebar/SideBar";
 import ArrowUpwardRoundedIcon from '@mui/icons-material/ArrowUpwardRounded';
 import MessageList from "../../components/messageList/MessageList";
-import { UserContext } from "../../context/UserContext"; // ajusta o path se necessário
+import { UserContext } from "../../context/UserContext"; 
 
 const HomePage: React.FC = () => {
   const { user, token } = useContext(UserContext)!;

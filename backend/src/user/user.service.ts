@@ -14,7 +14,7 @@ export class UserService {
   }
 
   async create(user: any): Promise<User> {
-    const newUser = new this.userModel(user); // Cria um novo documento
-    return newUser.save(); // Salva o documento no banco de dados
+    const newUser = new this.userModel(user); 
+    return newUser.save(); 
   }
 }

@@ -19,7 +19,7 @@ const LoginPage: React.FC = () => {
         password,
       });
       
-      // Login bem-sucedido
+      
       console.log("Login successful:", response.data);
       setError("");
       alert("Login successful!");

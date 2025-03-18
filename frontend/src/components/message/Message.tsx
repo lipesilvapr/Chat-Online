@@ -10,7 +10,7 @@ interface MessageProps {
   };
 }
 
-// Função que gera uma cor a partir de uma string (email)
+
 const stringToColor = (str: string): string => {
   let hash = 0;
   for (let i = 0; i < str.length; i++) {
@@ -27,7 +27,7 @@ const stringToColor = (str: string): string => {
 };
 
 const Message: React.FC<MessageProps> = ({ content, timestamp, sender }) => {
-  // Garante que a cor só muda se o email mudar
+  
   const senderColor = useMemo(
     () => stringToColor(sender.email),
     [sender.email]

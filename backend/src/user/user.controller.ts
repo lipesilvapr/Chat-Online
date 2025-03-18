@@ -11,10 +11,10 @@ export class UserController {
   async getProfile(@Request() req) {
     const user = await this.userService.findOneByEmail(req.user.email);
     if (!user) {
-      console.error('Usuário não encontrado para o email:', req.user.email); // Log do email
+      console.error('Usuário não encontrado para o email:', req.user.email); 
       throw new Error('Usuário não encontrado');
     }
-    const { password, ...result } = user; // Remove a senha do objeto
+    const { password, ...result } = user; 
     return result;
   }
 }
