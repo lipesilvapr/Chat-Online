@@ -7,9 +7,12 @@ export class MessagesController {
   constructor(private readonly messagesService: MessagesService) {}
 
   @Post()
-  async createMessage(@Body('content') content: string): Promise<Message> {
-    return this.messagesService.createMessage(content);
-  }
+  async createMessage(
+    @Body('content') content: string,
+    @Body('sender') sender: object,
+  ): Promise<Message> {
+    return this.messagesService.createMessage(content, sender);
+  }  
 
   @Get()
   async getAllMessages(): Promise<Message[]> {

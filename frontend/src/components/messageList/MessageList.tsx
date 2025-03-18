@@ -1,21 +1,28 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import api from "../../services/api";
 import Message from "../message/Message";
+import { io, Socket } from "socket.io-client"; 
 import "./styles.css";
 
 interface MessageType {
   _id: string;
   content: string;
   timestamp: string;
+  sender: {
+    name: string;
+    email: string;
+  };
 }
 
 const MessageList: React.FC = () => {
-  const [messages, setMessages] = React.useState<MessageType[]>([]);
+  const [messages, setMessages] = useState<MessageType[]>([]);
   const scrollBottomRef = useRef<HTMLDivElement | null>(null);
+  const socketRef = useRef<Socket | null>(null);
+  const api_url = import.meta.env.VITE_API_URL
 
   const formatDateToBrasilia = (isoDate: string) => {
     const date = new Date(isoDate);
-    const brasiliaTime = new Date(date.getTime() + 0 * 60 * 1000);
+    const brasiliaTime = new Date(date.getTime());
 
     const day = String(brasiliaTime.getDate()).padStart(2, "0");
     const month = String(brasiliaTime.getMonth() + 1).padStart(2, "0");
@@ -26,23 +33,41 @@ const MessageList: React.FC = () => {
     return `${day}/${month}/${year} - ${hours}:${minutes}`;
   };
 
-  const fetchMessages = async () => {
-    try {
-      const response = await api.get("/messages");
-      setMessages(response.data);
-    } catch (error) {
-      console.error("Erro ao buscar mensagens:", error);
-    }
-  };
+  
+  useEffect(() => {
+    const fetchMessages = async () => {
+      try {
+        const response = await api.get("/messages");
+        setMessages(response.data);
+      } catch (error) {
+        console.error("Erro ao buscar mensagens:", error);
+      }
+    };
 
-  // Rola para a última mensagem sempre que a lista de mensagens for atualizada
+    fetchMessages();
+  }, []);
+
+  
+  useEffect(() => {
+    
+    const socket = io(api_url);
+    socketRef.current = socket;
+
+    
+    socket.on("newMessage", (newMessage: MessageType) => {
+      setMessages((prevMessages) => [...prevMessages, newMessage]);
+    });
+
+    
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
+  
   useEffect(() => {
     scrollBottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
-
-  useEffect(() => {
-    fetchMessages();
-  }, []);
 
   return (
     <div className="message-list">
@@ -51,9 +76,9 @@ const MessageList: React.FC = () => {
           key={message._id}
           content={message.content}
           timestamp={formatDateToBrasilia(message.timestamp)}
+          sender={message.sender || { name: "Usuário Desconhecido", email: "" }}
         />
       ))}
-      {/* Âncora invisível para rolar automaticamente */}
       <div ref={scrollBottomRef} />
     </div>
   );

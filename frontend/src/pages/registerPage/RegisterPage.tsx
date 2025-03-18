@@ -26,11 +26,11 @@ const RegisterPage: React.FC = () => {
         password,
       });
 
-      // Registro bem-sucedido
+      
       console.log("Registration successful:", response.data);
       setError("");
       alert("Registration successful! Please log in.");
-      // Redirecionar para a tela de login
+      
       window.location.href = "/login";
     } catch (err) {
       setError((err as Error).message || "An error occurred during registration");
