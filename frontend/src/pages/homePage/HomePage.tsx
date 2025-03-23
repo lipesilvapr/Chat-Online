@@ -66,7 +66,7 @@ const HomePage: React.FC = () => {
         <SideBar />
         <div className="content">
           <div className="text-area">
-            <p>{bmessage || "Conectando..."}</p>
+            {/* <p>{bmessage || "Conectando..."}</p> */}
             <MessageList />
           </div>
           <div className="input-area">
